@@ -11,11 +11,13 @@ ENV BUILD_SCRIPTS_DIR=/opt/build_scripts
 COPY scripts $BUILD_SCRIPTS_DIR
 RUN chmod -R 750 $BUILD_SCRIPTS_DIR
 
-RUN sed -i 's@deb.debian.org@mirror.zim.uni-due.de@g' /etc/apt/sources.list.d/debian.sources
 
 ONBUILD ENV METEOR_DISABLE_OPTIMISTIC_CACHING=1
 
 # Define all --build-arg options
+ONBUILD ARG MIRROR_SOURCE
+ONBUILD ENV MIRROR_SOURCE=${MIRROR_SOURCE:-mirror.zim.uni-due.de}
+
 ONBUILD ARG NODE_VERSION
 ONBUILD ENV NODE_VERSION=${NODE_VERSION:-14.17.4}
 
@@ -25,6 +27,9 @@ ONBUILD ENV NPM_TOKEN=$NPM_TOKEN
 # Node flags for the Meteor build tool
 ONBUILD ARG TOOL_NODE_FLAGS
 ONBUILD ENV TOOL_NODE_FLAGS=$TOOL_NODE_FLAGS
+
+# Override package mirror
+ONBUILD RUN sed -i "s@deb.debian.org@$MIRROR_SOURCE@g" /etc/apt/sources.list.d/debian.sources
 
 # copy the app to the container
 ONBUILD COPY . $APP_SOURCE_DIR
