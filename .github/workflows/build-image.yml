@@ -70,6 +70,8 @@ jobs:
         with:
           platforms: ${{ matrix.platform }}
           push: true
+          provenance: mode=max
+          sbom: true
           outputs: type=image,"name=${{ env.IMAGE_NAME }}",push-by-digest=true,name-canonical=true,push=true
 
       - name: Calculate image name hash
