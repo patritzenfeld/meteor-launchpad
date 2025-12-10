@@ -14,9 +14,7 @@ jobs:
     name: Build and Deploy
 
     permissions:
-      contents: write
-      id-token: write
-      packages: write
+      contents: read
 
     strategy:
       fail-fast: false
