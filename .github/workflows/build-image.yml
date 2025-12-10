@@ -12,6 +12,11 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
+
     strategy:
       fail-fast: false
       matrix:
@@ -38,7 +43,7 @@ jobs:
             latest=true
           tags: |
             type=sha
-            type=raw,value={{date 'YYYY-MM-DD-HH-mm-ss'}}
+            type=raw,value={{date 'YYYY-MM-DD.HH-mm'}}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -125,7 +130,7 @@ jobs:
             latest=true
           tags: |
             type=sha
-            type=raw,value={{date 'YYYY-MM-DD-HH-mm-ss'}}
+            type=raw,value={{date 'YYYY-MM-DD.HH-mm'}}
 
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests
