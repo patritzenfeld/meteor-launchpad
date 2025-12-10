@@ -2,8 +2,8 @@ name: Build and Deploy Docker Image
 
 on:
   push:
-    # branches:
-    #   - master
+    branches:
+      - master
 
 env:
   IMAGE_NAME: "ghcr.io/nimec01/meteor-launchpad"
