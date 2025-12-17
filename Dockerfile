@@ -45,7 +45,6 @@ ONBUILD RUN cd $APP_SOURCE_DIR && \
 
 # Default values for Meteor environment variables
 ENV ROOT_URL=http://localhost
-ENV MONGO_URL=mongodb://127.0.0.1:27017/meteor
 ENV PORT=3000
 
 EXPOSE 3000
