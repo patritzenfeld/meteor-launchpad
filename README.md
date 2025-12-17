@@ -75,7 +75,7 @@ To use any of them, create a `launchpad.conf` in the root of your app and add an
 ```sh
 # launchpad.conf
 
-# Override the default Node.js version (default for meteor 2.x: 14.x; default vor meteor 3.x: 24.x)
+# Override the default Node.js version (default for meteor 2.x: 14.x; default for meteor 3.x: 24.x)
 NODE_VERSION=24.9.0
 ```
 
