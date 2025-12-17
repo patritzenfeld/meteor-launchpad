@@ -1,6 +1,11 @@
 # Meteor Launchpad - Base Docker Image for Meteor Apps
 
-Based on https://github.com/jshimko/meteor-launchpad
+Based on https://github.com/gbhrdt/meteor-launchpad and originally https://github.com/jshimko/meteor-launchpad
+
+Notable differences (to gbhrdt/meteor-launchpad):
+- Uses a different package mirror by default
+- `MONGO_URL` is optional and no local mongo server will be provided
+- Default Node.js version determined by used Meteor version (14.x for Meteor v2 apps; 24.x for Meteor v3+)
 
 ### Build this image
 
@@ -10,13 +15,17 @@ Setup for Apple Silicon devices:
 docker buildx build -t yourname/appbuild --platform linux/amd64
 ```
 
+> Note that this image will use a custom package mirror by default that is only available in our university network. You can change the mirror by setting the `MIRROR_SOURCE` environment variable.
+
 
 ### Build your app image
 
 Add the following to a `Dockerfile` in the root of your app:
 
 ```Dockerfile
-FROM gbhrdt/meteor-launchpad:1
+FROM fmidue/meteor-launchpad
+# You can also use a specific version. All available tags can be seen at the Docker Hub page.
+# FROM fmidue/meteor-launchpad:2025-12-03.12-08
 ```
 
 Then you can build the image with:
@@ -53,11 +62,9 @@ docker run -d \
 
 ### Build Options
 
-Meteor Launchpad supports setting custom build options in one of two ways.  You can either create a launchpad.conf config file in the root of your app or you can use [Docker build args](https://docs.docker.com/engine/reference/builder/#arg).  The currently supported options are to install any list of `apt-get` dependencies (Meteor Launchpad is built on `debian:jesse`).  
+Meteor Launchpad supports setting custom build options in one of two ways.  You can either create a launchpad.conf config file in the root of your app or you can use [Docker build args](https://docs.docker.com/engine/reference/builder/#arg).  The currently supported options are to install any list of `apt-get` dependencies (Meteor Launchpad is built on `debian:stable`).  
 
-If you choose to install Mongo, you can use it by _not_ supplying a `MONGO_URL` when you run your app container.  The startup script will then start Mongo inside the container and tell your app to use it.  If you _do_ supply a `MONGO_URL`, Mongo will not be started inside the container and the external database will be used instead.
-
-Note that having Mongo in the same container as your app is just for convenience while testing/developing.  In production, you should use a separate Mongo deployment or at least a separate Mongo container.
+This image does not contain a MongoDB installation. You need to host your database externally and provide a `MONGODB_URL`. Note that this is optional.
 
 Here are examples of both methods of setting custom options for your build:
 
@@ -68,8 +75,8 @@ To use any of them, create a `launchpad.conf` in the root of your app and add an
 ```sh
 # launchpad.conf
 
-# Install a custom Node version (default: latest 8.x)
-NODE_VERSION=8.9.0
+# Override the default Node.js version (default for meteor 2.x: 14.x; default vor meteor 3.x: 24.x)
+NODE_VERSION=24.9.0
 ```
 
 **Option #2 - Docker Build Args**
@@ -78,7 +85,7 @@ If you prefer not to have a config file in your project, your other option is to
 
 ```sh
 docker build \
-  --build-arg NODE_VERSION=8.9.0 \
+  --build-arg NODE_VERSION=24.9.0 \
   -t myorg/myapp:latest .
 ```
 
