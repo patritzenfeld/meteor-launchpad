@@ -5,6 +5,10 @@
 #
 set -e
 
+# Load NVM
+export NVM_DIR="/opt/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
 if [ -f $APP_SOURCE_DIR/launchpad.conf ]; then
   source <(grep TOOL_NODE_FLAGS $APP_SOURCE_DIR/launchpad.conf)
 fi
