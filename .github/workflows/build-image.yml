@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  IMAGE_NAME: "fmidue/meteor-launchpad"
+  IMAGE_NAME: "pritzenfeld/meteor-launchpad"
   DOCKER_HUB_USERNAME: "pritzenfeld"
 
 jobs:
