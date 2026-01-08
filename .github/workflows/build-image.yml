@@ -7,6 +7,7 @@ on:
 
 env:
   IMAGE_NAME: "fmidue/meteor-launchpad"
+  DOCKER_HUB_USERNAME: "pritzenfeld"
 
 jobs:
   build-and-deploy:
