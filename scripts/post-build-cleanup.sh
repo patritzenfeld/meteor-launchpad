@@ -28,8 +28,9 @@ rm -rf /opt/nodejs/bin/npm
 rm -rf /opt/nodejs/lib/node_modules/npm/
 
 # remove os dependencies
-apt-get purge -y --auto-remove apt-transport-https build-essential libarchive-tools bzip2 ca-certificates git wget gpg gnupg2 dirmngr conda
+apt-get purge -y --auto-remove apt-transport-https build-essential libarchive-tools bzip2 ca-certificates git wget gpg gnupg2 dirmngr
 apt-get -y autoremove
 apt-get -y clean
 apt-get -y autoclean
 rm -rf /var/lib/apt/lists/*
+/opt/conda/uninstall.sh -y
